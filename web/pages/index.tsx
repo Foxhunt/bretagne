@@ -1,45 +1,51 @@
-import Head from 'next/head'
-import { GetStaticProps } from 'next'
-import Container from '../components/container'
-import MoreStories from '../components/more-stories'
-import HeroPost from '../components/hero-post'
-import Intro from '../components/intro'
-import Layout from '../components/layout'
-import { getAllPostsForHome } from '../lib/api'
-import { CMS_NAME } from '../lib/constants'
+import { Physics } from "@react-three/cannon";
+import { OrbitControls } from "@react-three/drei";
+import { Canvas } from "@react-three/fiber";
+import Object from "../components/object";
+import Sand from "../components/sand";
+import Water from "../components/water";
 
-export default function Index({ allPosts: { edges }, preview }) {
-  const heroPost = edges[0]?.node
-  const morePosts = edges.slice(1)
-
+export default function Index() {
   return (
-    <Layout preview={preview}>
-      <Head>
-        <title>Next.js Blog Example with {CMS_NAME}</title>
-      </Head>
-      <Container>
-        <Intro />
-        {heroPost && (
-          <HeroPost
-            title={heroPost.title}
-            coverImage={heroPost.featuredImage}
-            date={heroPost.date}
-            author={heroPost.author}
-            slug={heroPost.slug}
-            excerpt={heroPost.excerpt}
+    <>
+      <Canvas
+        camera={{
+          fov: 75,
+          position: [0, 13, 20],
+          far: 4000,
+          near: 0.1,
+        }}
+      >
+        <color attach="background" args={["#00BFFF"]} />
+        <ambientLight />
+        <OrbitControls
+          makeDefault
+          // enableRotate={false}
+          // enablePan={false}
+          // enableZoom={false}
+          // onChange={(e) => console.log(e.target.object.position)}
+        />
+        <Physics broadphase="SAP">
+          <Sand
+            position={[0, 0, 0]}
+            rotation={[-Math.PI / 1.9, 0, 0]}
+            material={{ friction: 1, restitution: 0 }}
           />
-        )}
-        {morePosts.length > 0 && <MoreStories posts={morePosts} />}
-      </Container>
-    </Layout>
-  )
-}
-
-export const getStaticProps: GetStaticProps = async ({ preview = false }) => {
-  const allPosts = await getAllPostsForHome(preview)
-
-  return {
-    props: { allPosts, preview },
-    revalidate: 10,
-  }
+          <Water
+            position={[0, 0, 0]}
+            rotation={[-Math.PI / 2.1, 0, 0]}
+            material={{ friction: 0, restitution: 0 }}
+          />
+          {Array(10)
+            .fill("")
+            .map((_, i) => (
+              <Object
+                key={i}
+                position={[50 * Math.random() - 25, 10, -50 * Math.random()]}
+              />
+            ))}
+        </Physics>
+      </Canvas>
+    </>
+  );
 }
