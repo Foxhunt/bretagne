@@ -1,10 +1,14 @@
-import { usePlane, PlaneProps, useBox } from "@react-three/cannon";
+import { PlaneProps, useBox } from "@react-three/cannon";
 import { useTrailTexture } from "@react-three/drei";
-import { DoubleSide } from "three";
+import { DoubleSide, Mesh } from "three";
 
 export default function Sand(props: PlaneProps) {
-  // const [ref] = usePlane(() => ({ ...props, args: [5, 5] }));
-  const [ref] = useBox(() => ({ ...props, args: [500, 500, 1] }));
+  const [ref] = useBox<Mesh>(() => ({
+    ...props,
+    args: [500, 500, 1],
+    collisionFilterGroup: 4,
+    collisionFilterMask: 1,
+  }));
 
   const [texture, onMove] = useTrailTexture({
     size: 512,
@@ -16,22 +20,21 @@ export default function Sand(props: PlaneProps) {
 
   return (
     <>
-      <mesh ref={ref} onPointerMove={onMove}>
+      <mesh
+        rotation={props.rotation}
+        position={[0, 0.1, 0]}
+        onPointerMove={onMove}
+      >
         <boxGeometry args={[500, 500, 1]} />
         <meshStandardMaterial
-          attachArray="material"
           color={"#000000"}
           transparent
           alphaMap={texture}
         />
       </mesh>
-      <mesh rotation={props.rotation} position={[0, -0.01, 0]} receiveShadow>
+      <mesh ref={ref} receiveShadow>
         <boxGeometry args={[500, 500, 1]} />
-        <meshStandardMaterial
-          attachArray="material"
-          color={"#fff200"}
-          side={DoubleSide}
-        />
+        <meshStandardMaterial color={"#ffffff"} side={DoubleSide} />
       </mesh>
     </>
   );

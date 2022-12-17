@@ -1,8 +1,10 @@
 import { useThree } from "@react-three/fiber";
+import { useRouter } from "next/router";
 import Object from "../components/object";
 
 export default function Objects({ count = 10 }) {
   const three = useThree();
+  const router = useRouter();
 
   return (
     <>
@@ -11,10 +13,12 @@ export default function Objects({ count = 10 }) {
         .map((_, i) => (
           <Object
             key={i}
+            onClick={(e) => router.push(`/${i}`)}
             position={[
-              three.viewport.width * Math.random() - three.viewport.width / 2,
-              5,
-              -5 * Math.random() - 10,
+              three.viewport.width * 0.8 * Math.random() -
+                (three.viewport.width * 0.8) / 2,
+              -20 * Math.random() + 1.5,
+              -200 * Math.random() - 20,
             ]}
           />
         ))}
