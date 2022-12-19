@@ -4,6 +4,9 @@
 - node.js@v18
 - npm@v9 (ist bei Node enthalten)
 
+- [next.js](https://nextjs.org/learn/foundations/about-nextjs)
+- [react.js](https://www.react.express/) oder die offiziellen Docs: [alt](https://reactjs.org/docs/getting-started.html) und [neu](https://beta.reactjs.org/)
+
 ## Abhängigkeiten installieren und Entwicklungsserver starten
 
 Im Ordner `web` ausführen
