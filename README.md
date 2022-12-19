@@ -1,4 +1,18 @@
-# bretagne
+# Web
+
+## Umgebung
+- node.js@v18
+- npm@v9 (ist bei Node enthalten)
+
+## Abhängigkeiten installieren und Entwicklungsserver starten
+
+Im Ordner `web` ausführen
+```
+npm i
+npm run dev
+```
+
+# MiDaS-master
 
 ## Bilder in png konvertieren
 
