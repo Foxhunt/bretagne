@@ -1,11 +1,14 @@
 # Web
 
+[Konzept](https://www.figma.com/file/mb33j8jtcVjIRoN4eyAfOt/Kozept?node-id=34%3A44&t=9grzh73pzNonKGup-1)
+
 ## Umgebung
 - node.js@v18
 - npm@v9 (ist bei Node enthalten)
 
 - [next.js](https://nextjs.org/learn/foundations/about-nextjs)
 - [react.js](https://www.react.express/) oder die offiziellen Docs: [alt](https://reactjs.org/docs/getting-started.html) und [neu](https://beta.reactjs.org/)
+- [storyblok](https://www.storyblok.com/)
 
 ## Abhängigkeiten installieren und Entwicklungsserver starten
 
