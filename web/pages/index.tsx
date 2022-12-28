@@ -1,12 +1,14 @@
 import { Physics } from "@react-three/cannon";
 import { AdaptiveDpr, OrbitControls, Stats } from "@react-three/drei";
 import { Canvas } from "@react-three/fiber";
+import { getStoryblokApi } from "@storyblok/react";
+import { GetStaticProps } from "next";
 import { Suspense } from "react";
 import Objects from "../components/objects";
 import Sand from "../components/sand";
 import Water from "../components/water";
 
-export default function Index() {
+export default function Index({ projekte }) {
   return (
     <Canvas
       camera={{
@@ -55,9 +57,25 @@ export default function Index() {
             material={{ friction: 0.1, restitution: 0 }}
           />
         </Suspense>
-        <Objects count={10} />
+        <Objects projekte={projekte} />
         {/* </Debug> */}
       </Physics>
     </Canvas>
   );
 }
+
+export const getStaticProps: GetStaticProps = async ({ params }) => {
+  const storyblokApi = getStoryblokApi();
+
+  const { data } = await storyblokApi.getStories({
+    starts_with: "projekte/",
+    version: "draft",
+  });
+
+  const projekte = data.stories.map((story) => "/" + story.slug);
+
+  return {
+    props: { projekte },
+    revalidate: 3600, // revalidate every hour
+  };
+};
