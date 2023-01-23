@@ -1,8 +1,224 @@
-export default function Pointcloud({ blok }) {
+// export default function Pointcloud({ blok }) {
+//   return (
+//     <>
+//       <img src={blok.depth.filename} />
+//       <img src={blok.image.filename} />
+//     </>
+//   );
+// }
+
+import { OrbitControls } from "@react-three/drei";
+import { Canvas, useFrame } from "@react-three/fiber";
+import React, {
+  useEffect,
+  useMemo,
+  useRef,
+  useState,
+  useTransition,
+} from "react";
+import * as THREE from "three";
+import { BufferAttribute } from "three";
+
+const vertexShader = `
+uniform vec3 mousePos;
+${THREE.ShaderLib.points.vertexShader}
+`.replace(
+  `#include <begin_vertex>`,
+  `#include <begin_vertex>
+
+  // vec3 seg = position - mousePos;
+  // vec3 dir = normalize(seg);
+  // float dist = length(seg);
+  // float force = clamp(100. / dist, -50., 50.);
+  // transformed.z *= clamp(mousePos.x, -3., 3.);`
+);
+
+const fragmentShader = `
+varying vec3 vColor;
+void main() {
+
+  // gl_FragColor = vec4(vColor, step(length(gl_PointCoord.xy - vec2(0.5)), 0.5));
+
+  gl_FragColor = vec4(vColor, 1.);
+  //   smoothstep(
+  //     .5,
+  //     .0,
+  //     length(gl_PointCoord.xy - vec2(.5))
+  //   )
+  // );
+} `;
+
+function Particles({ pointCount, colors, depth, width, height }: any) {
+  const positions = useMemo(() => {
+    const maxSpread = 100;
+
+    return new Float32Array(
+      [...new Array(pointCount)].flatMap((_, i) => [
+        ((i % width) - width / 2) / 7,
+        ((i / width - height / 2) / 7) * -1,
+        // 0
+        depth[i] ** 5 * maxSpread - maxSpread / 2,
+      ])
+    );
+  }, [depth, height, pointCount, width]);
+
+  const materialRef = useRef<THREE.ShaderMaterial>(undefined!);
+  const geometryRef = useRef<THREE.BufferGeometry>(undefined!);
+
+  useFrame((state) => {
+    const t = state.clock.getElapsedTime();
+
+    const x = Math.sin(t * 0.6) * 30;
+    const y = Math.cos(t * 0.6) * 30;
+
+    materialRef.current.uniforms.mousePos.value.x = x;
+    materialRef.current.uniforms.mousePos.value.y = y;
+  });
+
+  useEffect(() => {
+    const color = geometryRef.current.attributes.color as BufferAttribute;
+    color.needsUpdate = true;
+
+    const position = geometryRef.current.attributes.position as BufferAttribute;
+    position.needsUpdate = true;
+
+    materialRef.current.needsUpdate = true;
+    materialRef.current.uniformsNeedUpdate = true;
+  }, [colors, depth, height, materialRef, pointCount, positions, width]);
+
   return (
-    <>
-      <img src={blok.depth.filename} />
-      <img src={blok.image.filename} />
-    </>
+    <points>
+      <bufferGeometry ref={geometryRef}>
+        <bufferAttribute
+          usage={THREE.StaticDrawUsage}
+          attach="attributes-position"
+          array={positions}
+          count={positions.length / 3}
+          itemSize={3}
+        />
+        <bufferAttribute
+          usage={THREE.StreamDrawUsage}
+          attach="attributes-color"
+          array={new Float32Array(colors)}
+          count={colors.length / 3}
+          itemSize={3}
+        />
+      </bufferGeometry>
+      <shaderMaterial
+        key={Math.random()}
+        ref={materialRef}
+        vertexColors
+        transparent
+        uniforms={{
+          size: { value: 4 },
+          scale: { value: 1 },
+          mousePos: { value: new THREE.Vector3(0, 0, -20) },
+        }}
+        fragmentShader={fragmentShader}
+        vertexShader={vertexShader}
+      />
+    </points>
+  );
+}
+
+export default function Pointcloud({ blok }) {
+  const [colors, setColors] = useState<Array<number>>([]);
+  const [depth, setDepth] = useState<Array<number>>([]);
+  const [width, setWidth] = useState(0);
+  const [height, setHeight] = useState(0);
+  const [imageIndex, setImageIndex] = useState(121);
+  const [imageIsPending, startImageTransition] = useTransition();
+  const [depthIsPending, startDepthTransition] = useTransition();
+
+  useEffect(() => {
+    const img = new Image();
+    img.crossOrigin = "";
+    img.src = blok.image.filename.replace(
+      "https://a.storyblok.com",
+      "https://s3.amazonaws.com/a.storyblok.com"
+    );
+    img.addEventListener("load", () => {
+      setWidth(img.width);
+      setHeight(img.height);
+
+      const canvas = document.createElement("canvas");
+      const context = canvas!.getContext("2d")!;
+
+      canvas.width = img.width;
+      canvas.height = img.height;
+
+      context.drawImage(img, 0, 0, img.width, img.height);
+      startImageTransition(() => {
+        setColors(
+          Array.from(context.getImageData(0, 0, img.width, img.height).data)
+            .filter((_, i) => i % 4 !== 3)
+            .map((v) => v / 256)
+        );
+      });
+    });
+
+    const depth = new Image();
+    depth.crossOrigin = "";
+    depth.src = blok.depth.filename.replace(
+      "https://a.storyblok.com",
+      "https://s3.amazonaws.com/a.storyblok.com"
+    );
+    depth.addEventListener("load", () => {
+      const canvas = document.createElement("canvas");
+      const context = canvas!.getContext("2d")!;
+
+      canvas.width = depth.width;
+      canvas.height = depth.height;
+
+      context.drawImage(depth, 0, 0, depth.width, depth.height);
+      startDepthTransition(() => {
+        setDepth(
+          Array.from(context.getImageData(0, 0, depth.width, depth.height).data)
+            .filter((_, i) => i % 4 === 2)
+            .map((v) => v / 256)
+        );
+      });
+    });
+  }, [imageIndex]);
+
+  // useEffect(() => {
+  //   const interval = setInterval(() => {
+  //     setImageIndex((imageIndex + 1) % 500)
+  //   }, 1000)
+
+  //   return () => clearInterval(interval)
+  // }, [imageIndex])
+
+  console.log(`${imageIndex}: ${width} * ${height} = ${width * height}`);
+
+  return (
+    <Canvas
+      onDoubleClick={() => {
+        setImageIndex((imageIndex + 1) % 500);
+      }}
+      camera={{ position: [0, 0, 100], far: 4000 }}
+      raycaster={{ params: { Points: { threshold: 0.2 } } }}
+    >
+      <OrbitControls
+        autoRotate={false}
+        autoRotateSpeed={0.1}
+        enablePan={false}
+        minPolarAngle={Math.PI / 3}
+        maxPolarAngle={Math.PI - Math.PI / 3}
+      />
+      {colors.length > 0 &&
+        depth.length > 0 &&
+        !imageIsPending &&
+        !depthIsPending && (
+          <Particles
+            key={Math.random()}
+            width={width}
+            height={height}
+            pointCount={colors.length / 3}
+            depth={depth}
+            colors={colors}
+          />
+        )}
+    </Canvas>
   );
 }

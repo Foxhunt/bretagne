@@ -4,6 +4,11 @@ import text from "../components/bloks/text";
 import projekt from "../components/bloks/projekt";
 import pointcloud from "../components/bloks/pointcloud";
 import kontent from "../components/bloks/kontent";
+import bild from "../components/bloks/bild";
+import video from "../components/bloks/video";
+import ton from "../components/bloks/ton";
+import gltf from "../components/bloks/gltf";
+
 import "../styles/index.css";
 
 const NEXT_PUBLIC_STORYBLOK_ACCESS_TOKEN =
@@ -17,6 +22,10 @@ storyblokInit({
     text,
     pointcloud,
     kontent,
+    bild,
+    video,
+    ton,
+    gltf,
   },
 });
 
