@@ -3,19 +3,21 @@ import { Canvas, useLoader } from "@react-three/fiber";
 import React, { Suspense } from "react";
 import { GLTFLoader } from "three/examples/jsm/loaders/GLTFLoader";
 
-function Test({ gltf }) {
+function GLTG({ gltf }) {
   const { scene } = useLoader(GLTFLoader, gltf) as any;
   return <primitive object={scene} />;
 }
 
 export default function GLTF({ blok }) {
   return (
+    <div className="w-full">
     <Canvas>
       <OrbitControls autoRotate={true} autoRotateSpeed={0.01} />
       <ambientLight />
       <Suspense fallback={null}>
-        {blok.gltf && <Test gltf={blok.gltf.filename} />}
+        {blok.gltf && <GLTG gltf={blok.gltf.filename} />}
       </Suspense>
     </Canvas>
+    </div>
   );
 }

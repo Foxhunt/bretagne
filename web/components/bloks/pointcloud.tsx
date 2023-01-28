@@ -126,7 +126,6 @@ export default function Pointcloud({ blok }) {
   const [depth, setDepth] = useState<Array<number>>([]);
   const [width, setWidth] = useState(0);
   const [height, setHeight] = useState(0);
-  const [imageIndex, setImageIndex] = useState(121);
   const [imageIsPending, startImageTransition] = useTransition();
   const [depthIsPending, startDepthTransition] = useTransition();
 
@@ -179,46 +178,38 @@ export default function Pointcloud({ blok }) {
         );
       });
     });
-  }, [imageIndex]);
-
-  // useEffect(() => {
-  //   const interval = setInterval(() => {
-  //     setImageIndex((imageIndex + 1) % 500)
-  //   }, 1000)
-
-  //   return () => clearInterval(interval)
-  // }, [imageIndex])
-
-  console.log(`${imageIndex}: ${width} * ${height} = ${width * height}`);
+  }, []);
 
   return (
-    <Canvas
-      onDoubleClick={() => {
-        setImageIndex((imageIndex + 1) % 500);
-      }}
-      camera={{ position: [0, 0, 100], far: 4000 }}
-      raycaster={{ params: { Points: { threshold: 0.2 } } }}
-    >
-      <OrbitControls
-        autoRotate={false}
-        autoRotateSpeed={0.1}
-        enablePan={false}
-        minPolarAngle={Math.PI / 3}
-        maxPolarAngle={Math.PI - Math.PI / 3}
-      />
-      {colors.length > 0 &&
-        depth.length > 0 &&
-        !imageIsPending &&
-        !depthIsPending && (
-          <Particles
-            key={Math.random()}
-            width={width}
-            height={height}
-            pointCount={colors.length / 3}
-            depth={depth}
-            colors={colors}
-          />
-        )}
-    </Canvas>
+    <div className="w-full">
+      <Canvas
+        camera={{ position: [0, 0, 100], far: 4000 }}
+        raycaster={{ params: { Points: { threshold: 0.2 } } }}
+      >
+        <OrbitControls
+          autoRotate={false}
+          autoRotateSpeed={0.1}
+          enablePan={false}
+          enableZoom={false}
+          minPolarAngle={Math.PI / 3}
+          maxPolarAngle={Math.PI - Math.PI / 3}
+          minAzimuthAngle={-Math.PI / 3}
+          maxAzimuthAngle={Math.PI / 3}
+        />
+        {colors.length > 0 &&
+          depth.length > 0 &&
+          !imageIsPending &&
+          !depthIsPending && (
+            <Particles
+              key={Math.random()}
+              width={width}
+              height={height}
+              pointCount={colors.length / 3}
+              depth={depth}
+              colors={colors}
+            />
+          )}
+      </Canvas>
+    </div>
   );
 }
