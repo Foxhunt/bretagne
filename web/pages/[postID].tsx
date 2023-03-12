@@ -1,15 +1,31 @@
 import {
   getStoryblokApi,
   ISbStoriesParams,
-  StoryblokComponent,
+  storyblokEditable,
   useStoryblokState,
 } from "@storyblok/react";
 import { GetStaticPaths, GetStaticProps } from "next";
+import Content from "../components/content";
 
 export default function Post({ story }) {
   story = useStoryblokState(story);
 
-  return <StoryblokComponent blok={story.content} />;
+  return (
+    <main {...storyblokEditable(story.content)}>
+      <div className="flex flex-col place-content-end h-[40vh] relative">
+        <img src={story.content.titelbild.filename} />
+        <h1 className="absolute backdrop-blur-sm bg-white/10 block w-full text-8xl text-white px-6 pb-3 pt-3 font-oswald">
+          {story.content.name}
+        </h1>
+      </div>
+      <div className="flex flex-col gap-8 m-6">
+        <p className="font-cardo">{story.content.beschreibung}</p>
+        {story.content.blocks.map((block) => (
+          <Content blok={block} key={block._uid} />
+        ))}
+      </div>
+    </main>
+  );
 }
 
 export const getStaticPaths: GetStaticPaths = async () => {

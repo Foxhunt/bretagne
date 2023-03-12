@@ -1,4 +1,5 @@
 /** @type {import('tailwindcss').Config} */
+
 module.exports = {
   content: [
     './pages/**/*.{js,ts,jsx,tsx}',
@@ -27,6 +28,10 @@ module.exports = {
         '6xl': '2.75rem',
         '7xl': '4.5rem',
         '8xl': '6.25rem',
+      },
+      fontFamily: {
+        cardo: ["Cardo"],
+        oswald: ["Oswald"],
       },
       boxShadow: {
         small: '0 5px 10px rgba(0, 0, 0, 0.12)',

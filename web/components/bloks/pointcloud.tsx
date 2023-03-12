@@ -181,35 +181,33 @@ export default function Pointcloud({ blok }) {
   }, []);
 
   return (
-    <div className="w-full h-80">
-      <Canvas
-        camera={{ position: [0, 0, 100], far: 4000 }}
-        raycaster={{ params: { Points: { threshold: 0.2 } } }}
-      >
-        <OrbitControls
-          autoRotate={false}
-          autoRotateSpeed={0.1}
-          enablePan={false}
-          enableZoom={false}
-          minPolarAngle={Math.PI / 3}
-          maxPolarAngle={Math.PI - Math.PI / 3}
-          minAzimuthAngle={-Math.PI / 3}
-          maxAzimuthAngle={Math.PI / 3}
-        />
-        {colors.length > 0 &&
-          depth.length > 0 &&
-          !imageIsPending &&
-          !depthIsPending && (
-            <Particles
-              key={Math.random()}
-              width={width}
-              height={height}
-              pointCount={colors.length / 3}
-              depth={depth}
-              colors={colors}
-            />
-          )}
-      </Canvas>
-    </div>
+    <Canvas
+      camera={{ position: [0, 0, 100], far: 4000 }}
+      raycaster={{ params: { Points: { threshold: 0.2 } } }}
+    >
+      <OrbitControls
+        autoRotate={false}
+        autoRotateSpeed={0.1}
+        enablePan={false}
+        enableZoom={false}
+        minPolarAngle={Math.PI / 3}
+        maxPolarAngle={Math.PI - Math.PI / 3}
+        minAzimuthAngle={-Math.PI / 3}
+        maxAzimuthAngle={Math.PI / 3}
+      />
+      {colors.length > 0 &&
+        depth.length > 0 &&
+        !imageIsPending &&
+        !depthIsPending && (
+          <Particles
+            key={Math.random()}
+            width={width}
+            height={height}
+            pointCount={colors.length / 3}
+            depth={depth}
+            colors={colors}
+          />
+        )}
+    </Canvas>
   );
 }

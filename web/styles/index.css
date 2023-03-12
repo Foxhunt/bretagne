@@ -11,7 +11,3 @@
 /* Start purging... */
 @tailwind utilities;
 /* Stop purging. */
-
-#__next {
-    height: 100vh;
-}

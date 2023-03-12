@@ -1,13 +1,14 @@
 import { apiPlugin, storyblokInit } from "@storyblok/react";
 import { AppProps } from "next/app";
-import text from "../components/bloks/text";
-import projekt from "../components/bloks/projekt";
 import pointcloud from "../components/bloks/pointcloud";
 import bild from "../components/bloks/bild";
 import video from "../components/bloks/video";
 import ton from "../components/bloks/ton";
 import gltf from "../components/bloks/gltf";
 import gallery from "../components/bloks/gallery";
+
+import "@fontsource/cardo";
+import "@fontsource/oswald";
 
 import "../styles/index.css";
 
@@ -18,8 +19,6 @@ storyblokInit({
   accessToken: NEXT_PUBLIC_STORYBLOK_ACCESS_TOKEN,
   use: [apiPlugin],
   components: {
-    projekt,
-    text,
     pointcloud,
     bild,
     video,
