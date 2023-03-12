@@ -3,7 +3,6 @@ import { AppProps } from "next/app";
 import text from "../components/bloks/text";
 import projekt from "../components/bloks/projekt";
 import pointcloud from "../components/bloks/pointcloud";
-import kontent from "../components/bloks/kontent";
 import bild from "../components/bloks/bild";
 import video from "../components/bloks/video";
 import ton from "../components/bloks/ton";
@@ -22,7 +21,6 @@ storyblokInit({
     projekt,
     text,
     pointcloud,
-    kontent,
     bild,
     video,
     ton,
