@@ -13,7 +13,7 @@ export default function Post({ story }) {
   return (
     <main {...storyblokEditable(story.content)}>
       <div className="flex flex-col place-content-end h-[40vh] relative">
-        <img src={story.content.titelbild.filename} />
+        <img src={story.content.titelbild?.filename} />
         <h1 className="absolute backdrop-blur-sm bg-white/10 block w-full text-8xl text-white px-6 pb-3 pt-3 font-oswald">
           {story.content.name}
         </h1>
