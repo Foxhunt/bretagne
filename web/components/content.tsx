@@ -22,7 +22,7 @@ export default function Content({ blok }) {
               <p className="text-4xl pb-6 font-oswald">{blok.titel}</p>
             )}
             {blok.beschreibung && (
-              <p
+              <div
                 className="text-justify font-cardo"
                 dangerouslySetInnerHTML={{
                   __html: renderRichText(blok.beschreibung),

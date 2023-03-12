@@ -10,8 +10,9 @@ import { Mesh, RepeatWrapping, Texture } from "three";
 
 export default function Object({
   onClick,
+  titelBild,
   ...props
-}: SphereProps & { onClick: (e: any) => void }) {
+}: SphereProps & { onClick: (e: any) => void; titelBild: string }) {
   const [ref, api] = useSphere<Mesh>(() => ({
     mass: 10,
     linearDamping: 0.1,
@@ -72,10 +73,13 @@ export default function Object({
 
   const [hovered, setHovered] = useState(false);
 
-  const texture = useTexture("/IMG_0334.jpg", (texture: Texture) => {
-    texture.wrapS = texture.wrapT = RepeatWrapping;
-    texture.repeat.set(1, 1);
-  });
+  const texture = useTexture(
+    titelBild || "/IMG_0334.jpg",
+    (texture: Texture) => {
+      texture.wrapS = texture.wrapT = RepeatWrapping;
+      texture.repeat.set(1, 1);
+    }
+  );
 
   return (
     <>
@@ -102,8 +106,7 @@ export default function Object({
         {/* <dodecahedronGeometry args={[1.5]} /> */}
         <meshStandardMaterial
           map={texture}
-          color={!hovered ? "#336633" : "#333366"}
-          opacity={1}
+          color={!hovered ? "#c0c0d8" : "#4dd2ff"}
         />
       </mesh>
       {/* {isUnderwater && (

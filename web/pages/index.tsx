@@ -40,9 +40,9 @@ export default function Index({ projekte }) {
         <ambientLight />
         <OrbitControls
           makeDefault
-          // enableRotate={false}
-          // enablePan={false}
-          // enableZoom={false}
+          enableRotate={false}
+          enablePan={false}
+          enableZoom={false}
           // onChange={(e) => console.log(e.target.object.position)}
         />
         <Physics>
@@ -66,7 +66,7 @@ export default function Index({ projekte }) {
   );
 }
 
-export const getStaticProps: GetStaticProps = async ({ params }) => {
+export const getStaticProps: GetStaticProps = async () => {
   const storyblokApi = getStoryblokApi();
 
   const { data } = await storyblokApi.getStories({
@@ -74,7 +74,14 @@ export const getStaticProps: GetStaticProps = async ({ params }) => {
     version: "draft",
   });
 
-  const projekte = data.stories.map((story) => "/" + story.slug);
+  const projekte = data.stories.map((story) => ({
+    path: "/" + story.slug,
+    titelBild:
+      story.content.titelbild?.filename.replace(
+        "https://a.storyblok.com",
+        "https://s3.amazonaws.com/a.storyblok.com"
+      ) || "",
+  }));
 
   return {
     props: { projekte },

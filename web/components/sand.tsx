@@ -15,7 +15,6 @@ export default function Sand(props: PlaneProps) {
     radius: 0.05,
     maxAge: 10 * 1000,
     interpolate: 1,
-    smoothing: 0,
   });
 
   return (
@@ -27,7 +26,7 @@ export default function Sand(props: PlaneProps) {
       >
         <boxGeometry args={[500, 500, 1]} />
         <meshStandardMaterial
-          color={"#FF0000"}
+          color={"#26285a"}
           transparent
           alphaMap={texture}
         />

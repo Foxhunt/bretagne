@@ -63,11 +63,6 @@ const elementSize = 10;
 export default function Water(props: HeightfieldProps) {
   const three = useThree();
   const GPUTier = useDetectGPU();
-  const texture = useTexture("/background_hg.png", (texture: Texture) => {
-    texture.wrapS = texture.wrapT = RepeatWrapping;
-    texture.rotation = Math.PI / 2;
-    texture.repeat.set(1, 1);
-  });
 
   const [heights, setHeights] = useState<number[][]>(
     Array(Math.floor(three.viewport.width / 2.2)).fill(Array(30).fill(0))
@@ -113,14 +108,7 @@ export default function Water(props: HeightfieldProps) {
   return (
     <mesh ref={ref} receiveShadow>
       <HeightmapGeometry heights={heights} elementSize={elementSize} />
-      <meshStandardMaterial
-        // map={texture}
-        color={"#000000"}
-        // transparent
-        // opacity={0.9}
-        // side={DoubleSide}
-        // wireframe={true}
-      />
+      <meshStandardMaterial color={"#000000"} />
     </mesh>
   );
 }

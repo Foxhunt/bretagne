@@ -8,10 +8,11 @@ export default function Objects({ projekte }) {
 
   return (
     <>
-      {projekte.map((projekt) => (
+      {projekte.map(({ path, titelBild }) => (
         <Object
-          key={projekt}
-          onClick={(e) => router.push(projekt)}
+          key={path}
+          onClick={(e) => router.push(path)}
+          titelBild={titelBild}
           position={[
             three.viewport.width * 0.8 * Math.random() -
               (three.viewport.width * 0.8) / 2,
