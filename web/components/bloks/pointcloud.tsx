@@ -181,7 +181,7 @@ export default function Pointcloud({ blok }) {
   }, []);
 
   return (
-    <div className="w-full">
+    <div className="w-full h-80">
       <Canvas
         camera={{ position: [0, 0, 100], far: 4000 }}
         raycaster={{ params: { Points: { threshold: 0.2 } } }}

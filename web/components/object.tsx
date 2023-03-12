@@ -102,11 +102,11 @@ export default function Object({
         {/* <dodecahedronGeometry args={[1.5]} /> */}
         <meshStandardMaterial
           map={texture}
-          color={hovered ? "#aaffaa" : "#aaaaff"}
+          color={!hovered ? "#336633" : "#333366"}
           opacity={1}
         />
       </mesh>
-      {isUnderwater && (
+      {/* {isUnderwater && (
         <Line
           points={[position, [position[0], position[1] + 50, position[2]]]}
           color={"#ff0000"}
@@ -117,7 +117,7 @@ export default function Object({
           points={[position, [position[0], position[1] - 5, position[2]]]}
           color={"#00ff00"}
         />
-      )}
+      )} */}
     </>
   );
 }

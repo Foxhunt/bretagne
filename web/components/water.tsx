@@ -111,11 +111,11 @@ export default function Water(props: HeightfieldProps) {
   });
 
   return (
-    <mesh ref={ref}>
+    <mesh ref={ref} receiveShadow>
       <HeightmapGeometry heights={heights} elementSize={elementSize} />
       <meshStandardMaterial
-        map={texture}
-        // color={"#ff0000"}
+        // map={texture}
+        color={"#000000"}
         // transparent
         // opacity={0.9}
         // side={DoubleSide}

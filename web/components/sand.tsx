@@ -22,19 +22,19 @@ export default function Sand(props: PlaneProps) {
     <>
       <mesh
         rotation={props.rotation}
-        position={[0, 0.1, 0]}
+        position={[0, 0.01, 0]}
         onPointerMove={onMove}
       >
         <boxGeometry args={[500, 500, 1]} />
         <meshStandardMaterial
-          color={"#000000"}
+          color={"#FF0000"}
           transparent
           alphaMap={texture}
         />
       </mesh>
       <mesh ref={ref} receiveShadow>
         <boxGeometry args={[500, 500, 1]} />
-        <meshStandardMaterial color={"#ffffff"} side={DoubleSide} />
+        <meshStandardMaterial color={"#999999"} side={DoubleSide} />
       </mesh>
     </>
   );

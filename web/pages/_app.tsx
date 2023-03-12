@@ -8,6 +8,7 @@ import bild from "../components/bloks/bild";
 import video from "../components/bloks/video";
 import ton from "../components/bloks/ton";
 import gltf from "../components/bloks/gltf";
+import gallery from "../components/bloks/gallery";
 
 import "../styles/index.css";
 
@@ -26,6 +27,7 @@ storyblokInit({
     video,
     ton,
     gltf,
+    gallery,
   },
 });
 
