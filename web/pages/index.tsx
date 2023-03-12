@@ -75,13 +75,17 @@ export const getStaticProps: GetStaticProps = async () => {
   });
 
   const projekte = data.stories.map((story) => ({
-    path: "/" + story.slug,
+    path: story.full_slug,
     titelBild:
       story.content.titelbild?.filename.replace(
         "https://a.storyblok.com",
         "https://s3.amazonaws.com/a.storyblok.com"
       ) || "",
   }));
+
+  // data.stories.forEach((story) => {
+  //   console.log(story);
+  // });
 
   return {
     props: { projekte },

@@ -5,7 +5,7 @@ import {
   useStoryblokState,
 } from "@storyblok/react";
 import { GetStaticPaths, GetStaticProps } from "next";
-import Content from "../components/content";
+import Content from "../../components/content";
 
 export default function Post({ story }) {
   story = useStoryblokState(story);
@@ -36,11 +36,11 @@ export const getStaticPaths: GetStaticPaths = async () => {
     version: "draft",
   });
 
-  const paths = data.stories.map((story) => "/" + story.slug);
+  const paths = data.stories.map((story) => "/" + story.full_slug);
 
   return {
     paths,
-    fallback: false,
+    fallback: "blocking",
   };
 };
 

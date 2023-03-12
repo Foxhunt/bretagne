@@ -73,13 +73,10 @@ export default function Object({
 
   const [hovered, setHovered] = useState(false);
 
-  const texture = useTexture(
-    titelBild || "/IMG_0334.jpg",
-    (texture: Texture) => {
-      texture.wrapS = texture.wrapT = RepeatWrapping;
-      texture.repeat.set(1, 1);
-    }
-  );
+  const texture = useTexture(titelBild, (texture: Texture) => {
+    texture.wrapS = texture.wrapT = RepeatWrapping;
+    texture.repeat.set(1, 1);
+  });
 
   return (
     <>
