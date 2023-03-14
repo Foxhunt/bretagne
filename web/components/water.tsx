@@ -1,14 +1,8 @@
 import { HeightfieldProps, Triplet, useHeightfield } from "@react-three/cannon";
-import { useDetectGPU, useTexture } from "@react-three/drei";
+import { useDetectGPU } from "@react-three/drei";
 import { useFrame, useThree } from "@react-three/fiber";
 import { useEffect, useRef, useState } from "react";
-import {
-  BufferGeometry,
-  Float32BufferAttribute,
-  Mesh,
-  RepeatWrapping,
-  Texture,
-} from "three";
+import { BufferGeometry, Float32BufferAttribute, Mesh } from "three";
 
 function HeightmapGeometry({
   elementSize,
@@ -53,7 +47,7 @@ function HeightmapGeometry({
     ref.current.computeVertexNormals();
     ref.current.computeBoundingBox();
     ref.current.computeBoundingSphere();
-  }, [heights]);
+  }, [elementSize, heights]);
 
   return <bufferGeometry ref={ref} />;
 }

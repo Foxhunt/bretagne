@@ -1,5 +1,5 @@
 import { Physics } from "@react-three/cannon";
-import { AdaptiveDpr, OrbitControls, Stats } from "@react-three/drei";
+import { AdaptiveDpr, OrbitControls } from "@react-three/drei";
 import { Canvas } from "@react-three/fiber";
 import { getStoryblokApi } from "@storyblok/react";
 import { GetStaticProps } from "next";
@@ -28,7 +28,7 @@ export default function Index({ projekte }) {
         }}
       >
         <AdaptiveDpr pixelated />
-        <Stats showPanel={0} className="stats" />
+        {/* <Stats showPanel={0} className="stats" /> */}
         <pointLight
           position={[100, 50, -100]}
           intensity={3}

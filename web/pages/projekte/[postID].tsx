@@ -25,7 +25,7 @@ export default function Post({ story }) {
           {story.content.name}
         </h1>
       </div>
-      <div className="flex flex-col gap-8 m-6">
+      <div className="flex flex-col gap-8 mt-6 mx-32">
         <p className="font-cardo">{story.content.beschreibung}</p>
         {story.content.blocks?.map((block) => (
           <Content blok={block} key={block._uid} />

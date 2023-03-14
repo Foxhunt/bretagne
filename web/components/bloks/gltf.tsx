@@ -11,7 +11,12 @@ function GLTG({ gltf }) {
 export default function GLTF({ blok }) {
   return (
     <Canvas>
-      <OrbitControls autoRotate={true} autoRotateSpeed={0.01} />
+      <OrbitControls
+        autoRotate={true}
+        autoRotateSpeed={0.01}
+        enablePan={false}
+        enableZoom={false}
+      />
       <ambientLight />
       <Suspense fallback={null}>
         {blok.gltf && <GLTG gltf={blok.gltf.filename} />}

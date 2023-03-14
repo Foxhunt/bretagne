@@ -1,21 +1,6 @@
-// export default function Pointcloud({ blok }) {
-//   return (
-//     <>
-//       <img src={blok.depth.filename} />
-//       <img src={blok.image.filename} />
-//     </>
-//   );
-// }
-
 import { OrbitControls } from "@react-three/drei";
 import { Canvas, useFrame } from "@react-three/fiber";
-import React, {
-  useEffect,
-  useMemo,
-  useRef,
-  useState,
-  useTransition,
-} from "react";
+import { useEffect, useMemo, useRef, useState, useTransition } from "react";
 import * as THREE from "three";
 import { BufferAttribute } from "three";
 
@@ -178,36 +163,46 @@ export default function Pointcloud({ blok }) {
         );
       });
     });
-  }, []);
+  }, [blok.depth.filename, blok.image.filename]);
 
   return (
-    <Canvas
-      camera={{ position: [0, 0, 100], far: 4000 }}
-      raycaster={{ params: { Points: { threshold: 0.2 } } }}
-    >
-      <OrbitControls
-        autoRotate={false}
-        autoRotateSpeed={0.1}
-        enablePan={false}
-        enableZoom={false}
-        minPolarAngle={Math.PI / 3}
-        maxPolarAngle={Math.PI - Math.PI / 3}
-        minAzimuthAngle={-Math.PI / 3}
-        maxAzimuthAngle={Math.PI / 3}
-      />
-      {colors.length > 0 &&
-        depth.length > 0 &&
-        !imageIsPending &&
-        !depthIsPending && (
-          <Particles
-            key={Math.random()}
-            width={width}
-            height={height}
-            pointCount={colors.length / 3}
-            depth={depth}
-            colors={colors}
-          />
-        )}
-    </Canvas>
+    <div className="h-full">
+      <Canvas
+        linear
+        flat
+        resize={{
+          debounce: { scroll: 0, resize: 0 },
+          scroll: false,
+          offsetSize: true,
+        }}
+        camera={{ position: [0, 0, 100], far: 1000 }}
+        raycaster={{ params: { Points: { threshold: 0.2 } } }}
+      >
+        <OrbitControls
+          autoRotate
+          autoRotateSpeed={-0.4}
+          enablePan={false}
+          enableZoom={false}
+          minPolarAngle={Math.PI / 3}
+          maxPolarAngle={Math.PI - Math.PI / 3}
+          // minAzimuthAngle={-Math.PI / 3}
+          // maxAzimuthAngle={Math.PI / 3}
+          // onUpdate={(self) => console.log(self)}
+        />
+        {colors.length > 0 &&
+          depth.length > 0 &&
+          !imageIsPending &&
+          !depthIsPending && (
+            <Particles
+              key={Math.random()}
+              width={width}
+              height={height}
+              pointCount={colors.length / 3}
+              depth={depth}
+              colors={colors}
+            />
+          )}
+      </Canvas>
+    </div>
   );
 }

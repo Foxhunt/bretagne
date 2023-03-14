@@ -4,7 +4,7 @@ import {
   useRaycastClosest,
   useSphere,
 } from "@react-three/cannon";
-import { Line, useTexture } from "@react-three/drei";
+import { useTexture } from "@react-three/drei";
 import { useEffect, useState } from "react";
 import { Mesh, RepeatWrapping, Texture } from "three";
 
@@ -34,7 +34,7 @@ export default function Object({
         setPosition([position[0], position[1] - 1.5, position[2]]);
       });
     }
-  }, [isUnderwater]);
+  }, [api.position, isUnderwater]);
 
   useRaycastClosest(
     {
