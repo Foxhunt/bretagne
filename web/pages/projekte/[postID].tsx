@@ -7,13 +7,20 @@ import {
 import { GetStaticPaths, GetStaticProps } from "next";
 import Content from "../../components/content";
 
+import Image from "next/image";
+
 export default function Post({ story }) {
   story = useStoryblokState(story);
 
   return (
     <main {...storyblokEditable(story.content)}>
       <div className="flex flex-col place-content-end h-[40vh] relative">
-        <img src={story.content.titelbild?.filename} />
+        <Image
+          className="object-cover"
+          src={story.content.titelbild?.filename}
+          alt={story.content.name}
+          fill
+        />
         <h1 className="absolute backdrop-blur-sm bg-white/10 block w-full text-8xl text-white px-6 pb-3 pt-3 font-oswald">
           {story.content.name}
         </h1>
