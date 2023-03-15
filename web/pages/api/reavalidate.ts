@@ -12,6 +12,11 @@ export default async function handler(
     .digest("hex");
 
   if (bodyHmac !== req.headers["storyblok-signature"]) {
+    console.error("Invalid token");
+    console.log(req.headers["storyblok-signature"]);
+    console.log(bodyHmac);
+    console.log(req.body);
+
     return res.status(401).json({ message: "Invalid token" });
   }
 
@@ -25,9 +30,9 @@ export default async function handler(
     await res.revalidate(story.data.story.full_slug);
     console.log(`Revalidated ${story.data.story.full_slug}`);
 
-    console.dir(story);
+    console.log(story);
 
-    console.dir(story.data);
+    console.log(story.data);
 
     return res.json({ revalidated: true });
   } catch (err) {
