@@ -11,9 +11,9 @@ export default async function handler(
     .update(JSON.stringify(req.body))
     .digest("hex");
 
-  if (bodyHmac !== req.headers["storyblok-signature"]) {
+  if (bodyHmac !== req.headers["webhook-signature"]) {
     console.error("Invalid token");
-    console.log(req.headers["storyblok-signature"]);
+    console.log(req.headers["webhook-signature"]);
     console.log(bodyHmac);
     console.log(req.body);
 
