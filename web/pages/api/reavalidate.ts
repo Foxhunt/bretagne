@@ -13,10 +13,6 @@ export default async function handler(
 
   if (bodyHmac !== req.headers["webhook-signature"]) {
     console.error("Invalid token");
-    console.log(req.headers["webhook-signature"]);
-    console.log(bodyHmac);
-    console.log(req.body);
-
     return res.status(401).json({ message: "Invalid token" });
   }
 
@@ -27,13 +23,8 @@ export default async function handler(
     const storyblokApi = getStoryblokApi();
     const story = await storyblokApi.getStory(req.body.story_id, sbParams);
 
-    await res.revalidate(story.data.story.full_slug);
+    await res.revalidate("/" + story.data.story.full_slug);
     console.log(`Revalidated ${story.data.story.full_slug}`);
-
-    console.log(story);
-
-    console.log(story.data);
-
     return res.json({ revalidated: true });
   } catch (err) {
     console.error(err);
