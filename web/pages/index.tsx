@@ -77,10 +77,9 @@ export const getStaticProps: GetStaticProps = async () => {
   const projekte = data.stories.map((story) => ({
     path: story.full_slug,
     titelBild:
-      story.content.titelbild?.filename.replace(
-        "https://a.storyblok.com",
-        "https://s3.amazonaws.com/a.storyblok.com"
-      ) || "",
+      `/_next/image?url=${encodeURIComponent(
+        story.content.titelbild?.filename
+      )}&w=640&q=75` || "",
   }));
 
   // data.stories.forEach((story) => {
@@ -89,6 +88,6 @@ export const getStaticProps: GetStaticProps = async () => {
 
   return {
     props: { projekte },
-    revalidate: 1, // revalidate every hour
+    revalidate: 3600, // revalidate every hour
   };
 };
