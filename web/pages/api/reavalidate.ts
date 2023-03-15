@@ -23,6 +23,12 @@ export default async function handler(
     const story = await storyblokApi.getStory(req.body.story_id, sbParams);
 
     await res.revalidate(story.data.story.full_slug);
+    console.log(`Revalidated ${story.data.story.full_slug}`);
+
+    console.dir(story);
+
+    console.dir(story.data);
+
     return res.json({ revalidated: true });
   } catch (err) {
     return res.status(500).send("Error revalidating");
