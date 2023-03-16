@@ -1,10 +1,17 @@
 import { useThree } from "@react-three/fiber";
 import { useRouter } from "next/router";
+import { useEffect } from "react";
 import Object from "../components/object";
 
 export default function Objects({ projekte }) {
   const three = useThree();
   const router = useRouter();
+
+  useEffect(() => {
+    for (const { path } of projekte) {
+      router.prefetch("/projekte/[postID]", path);
+    }
+  }, [projekte, router]);
 
   return (
     <>
