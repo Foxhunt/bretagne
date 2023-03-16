@@ -1,4 +1,4 @@
-import { getStoryblokApi, ISbStoryParams } from "@storyblok/react";
+import StoryblokClient, { ISbStoryParams } from "storyblok-js-client";
 import crypto from "crypto";
 import type { NextApiRequest, NextApiResponse } from "next";
 
@@ -17,11 +17,14 @@ export default async function handler(
   }
 
   try {
+    const storyblok = new StoryblokClient({
+      accessToken: process.env.NEXT_PUBLIC_STORYBLOK_ACCESS_TOKEN,
+    });
+
     const sbParams: ISbStoryParams = {
       version: "published",
     };
-    const storyblokApi = getStoryblokApi();
-    const story = await storyblokApi.getStory(req.body.story_id, sbParams);
+    const story = await storyblok.getStory(req.body.story_id, sbParams);
 
     await res.revalidate("/" + story.data.story.full_slug);
     console.log(`Revalidated ${story.data.story.full_slug}`);
