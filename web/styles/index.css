@@ -11,3 +11,7 @@
 /* Start purging... */
 @tailwind utilities;
 /* Stop purging. */
+
+html {
+    scrollbar-gutter: stable;
+}

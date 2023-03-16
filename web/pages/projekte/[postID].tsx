@@ -13,7 +13,10 @@ export default function Post({ story }) {
   story = useStoryblokState(story);
 
   return (
-    <main {...storyblokEditable(story.content)}>
+    <main
+      {...storyblokEditable(story.content)}
+      className="absolute top-0 w-full min-h-screen bg-white"
+    >
       <div className="flex flex-col place-content-end h-[40vh] relative">
         <Image
           className="object-cover"
