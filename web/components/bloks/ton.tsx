@@ -1,7 +1,13 @@
 export default function Ton({ blok }) {
   return (
-    <div className="h-full w-full flex-1 flex place-items-center justify-center">
-      <audio className="" src={blok.ton.filename} controls loop />
+    <div className="">
+      <audio
+        className="w-full min-w-[250px]"
+        src={blok.ton.filename}
+        controls
+        loop
+      />
+      {blok.titel && <p className="pt-3">{blok.titel}</p>}
     </div>
   );
 }

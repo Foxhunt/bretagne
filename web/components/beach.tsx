@@ -14,7 +14,7 @@ export default function Beack({ projekte }) {
   const stopRenderAndPhysics = router.asPath !== "/";
 
   return (
-    <div className="h-screen">
+    <div className={`h-screen w-full ${stopRenderAndPhysics && "hidden"}`}>
       <Canvas
         camera={{
           fov: 70,

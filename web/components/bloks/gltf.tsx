@@ -10,17 +10,20 @@ function GLTG({ gltf }) {
 
 export default function GLTF({ blok }) {
   return (
-    <Canvas>
-      <OrbitControls
-        autoRotate={true}
-        autoRotateSpeed={0.01}
-        enablePan={false}
-        enableZoom={false}
-      />
-      <ambientLight />
-      <Suspense fallback={null}>
-        {blok.gltf && <GLTG gltf={blok.gltf.filename} />}
-      </Suspense>
-    </Canvas>
+    <div className="w-full aspect-square">
+      <Canvas>
+        <OrbitControls
+          autoRotate={true}
+          autoRotateSpeed={0.01}
+          enablePan={false}
+          enableZoom={false}
+        />
+        <ambientLight />
+        <Suspense fallback={null}>
+          {blok.gltf && <GLTG gltf={blok.gltf.filename} />}
+        </Suspense>
+      </Canvas>
+      {blok.titel && <p className="pt-3">{blok.titel}</p>}
+    </div>
   );
 }

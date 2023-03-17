@@ -6,11 +6,13 @@ import gltf from "../components/bloks/gltf";
 import pointcloud from "../components/bloks/pointcloud";
 import ton from "../components/bloks/ton";
 import video from "../components/bloks/video";
+import text from "../components/bloks/text";
 
 import Beach from "../components/beach";
 import "../styles/index.css";
 import Link from "next/link";
 import { IBM_Plex_Mono } from "next/font/google";
+import { useRouter } from "next/router";
 
 const NEXT_PUBLIC_STORYBLOK_ACCESS_TOKEN =
   process.env.NEXT_PUBLIC_STORYBLOK_ACCESS_TOKEN;
@@ -25,6 +27,7 @@ storyblokInit({
     ton,
     gltf,
     gallery,
+    text,
   },
 });
 
@@ -41,9 +44,16 @@ function MyApp({
 }: AppProps & {
   projekte: { path: string; titelBild: string }[];
 }) {
+  const router = useRouter();
+  const inIndex = router.asPath === "/";
+
   return (
-    <main className={`${ibm_plex_mono.variable} font-mono`}>
-      <nav className="flex items-center justify-center">
+    <div className={`${ibm_plex_mono.variable} font-mono`}>
+      <nav
+        className={`flex items-center justify-center ${
+          inIndex ? "bg-[#EEEEEE]" : "bg-[#F5F5F5]"
+        }`}
+      >
         <ul className="flex flex-col md:flex-row align-center text-xl text-center py-9">
           <li className="px-14 py-1">Exkursion</li>
           <Link href="/">
@@ -56,13 +66,17 @@ function MyApp({
         <Beach projekte={projekte} />
         <Component {...pageProps} />
       </div>
-      <div className="w-full h-64 flex flex-col items-center justify-center bg-[#D3D3D3] text-xs text-center">
+      <footer
+        className={`w-full h-64 flex flex-col items-center justify-center ${
+          inIndex ? "bg-[#d0d0d0]" : "bg-[#F5F5F5]"
+        } text-xs text-center`}
+      >
         <p>© 2023 Raum für Gestaltung – Fachbereich Medien,</p>
         <p>Hochschule Düsseldorf, University of Applied Science, Düsseldorf.</p>
         <p>Münsterstraße 156, 40476, Düsseldorf.</p>
         <p>Datenschutz, Impressum.</p>
-      </div>
-    </main>
+      </footer>
+    </div>
   );
 }
 

@@ -2,14 +2,17 @@ import Image from "next/image";
 
 export default function Bild({ blok }) {
   return (
-    <div className="flex-1 flex w-full md:h-full aspect-video place-items-center justify-center relative">
+    <div className="">
       <Image
-        className="object-cover"
+        className="object-cover rounded-3xl"
         src={blok.bild.filename}
         alt={blok.titel}
-        fill
-        sizes="(min-width: 768px) 100vw, 640px"
+        width={520}
+        height={520}
+        // fill
+        // sizes="(min-width: 768px) 100vw, 640px"
       />
+      {blok.titel && <p className="pt-3">{blok.titel}</p>}
     </div>
   );
 }

@@ -166,7 +166,7 @@ export default function Pointcloud({ blok }) {
   }, [blok.depth.filename, blok.image.filename]);
 
   return (
-    <div className="h-full">
+    <div className="w-full aspect-square">
       <Canvas
         linear
         flat
@@ -203,6 +203,7 @@ export default function Pointcloud({ blok }) {
             />
           )}
       </Canvas>
+      {blok.titel && <p className="pt-3">{blok.titel}</p>}
     </div>
   );
 }

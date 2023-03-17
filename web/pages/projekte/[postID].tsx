@@ -6,8 +6,7 @@ import {
 } from "@storyblok/react";
 import { GetStaticPaths, GetStaticProps } from "next";
 import Content from "../../components/content";
-
-import Image from "next/image";
+import Header from "../../components/header";
 
 export default function Post({ story }) {
   story = useStoryblokState(story);
@@ -15,26 +14,23 @@ export default function Post({ story }) {
   return (
     <div
       {...storyblokEditable(story.content)}
-      className="absolute top-0 w-full min-h-screen bg-white"
+      className="w-full min-h-screen bg-[#F5F5F5]"
     >
-      <div className="flex flex-col place-content-end h-[40vh] relative">
-        <Image
-          className="object-cover"
-          src={story.content.titelbild?.filename}
-          alt={story.content.name}
-          fill
-          priority
-        />
-        <h1 className="absolute backdrop-blur-sm bg-white/10 block w-full text-8xl text-white px-6 pb-3 pt-3">
-          {story.content.name}
-        </h1>
-      </div>
-      <div className="flex flex-col gap-8 mt-6 mx-6 md:mx-32">
-        <p className="">{story.content.beschreibung}</p>
-        {story.content.blocks?.map((block) => (
-          <Content blok={block} key={block._uid} />
-        ))}
-      </div>
+      <Header story={story} />
+      <main className="flex flex-col gap-5 pt-5 px-6 sm:px-20 md:px-30 lg:px-52">
+        <section>
+          <h1 className="font-bold text-4xl ">{story.content.projektname}</h1>
+          <p className="text-3xl">{story.content.name}</p>
+        </section>
+        <p className="md:columns-2 gap-5 text-justify">
+          {story.content.beschreibung}
+        </p>
+        <div className="grid items-center justify-items-center md:grid-cols-2 md:grid-flow-dense gap-5">
+          {story.content.blocks?.map((block) => (
+            <Content blok={block} key={block._uid} />
+          ))}
+        </div>
+      </main>
     </div>
   );
 }
