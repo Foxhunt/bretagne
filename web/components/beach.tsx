@@ -1,8 +1,7 @@
 import { Physics } from "@react-three/cannon";
-import { AdaptiveDpr, OrbitControls } from "@react-three/drei";
+import { AdaptiveDpr } from "@react-three/drei";
 import { Canvas, useFrame } from "@react-three/fiber";
 import { useRouter } from "next/router";
-import { Suspense } from "react";
 import Objects from "./objects";
 import Sand from "./sand";
 import Water from "./water";
@@ -14,7 +13,7 @@ export default function Beack({ projekte }) {
   const stopRenderAndPhysics = router.asPath !== "/";
 
   return (
-    <div className={`h-screen w-full ${stopRenderAndPhysics && "hidden"}`}>
+    <div className={`h-screen w-full ${stopRenderAndPhysics ? "hidden" : ""}`}>
       <Canvas
         camera={{
           fov: 70,
@@ -43,26 +42,24 @@ export default function Beack({ projekte }) {
         />
         <color attach="background" args={["#eeeeee"]} />
         <ambientLight />
-        <OrbitControls
+        {/* <OrbitControls
           makeDefault
           enableRotate={false}
           enablePan={false}
           enableZoom={false}
           // onChange={(e) => console.log(e.target.object.position)}
-        />
+        /> */}
         <Physics>
           {/* <Debug> */}
           <Sand
             rotation={[-Math.PI / 1.9, 0, 0]}
             material={{ friction: 1, restitution: 1 }}
           />
-          <Suspense>
-            {/* @ts-ignore */}
-            <Water
-              rotation={[-Math.PI / 2.1, 0, 0]}
-              material={{ friction: 0.1, restitution: 0 }}
-            />
-          </Suspense>
+          {/* @ts-ignore */}
+          <Water
+            rotation={[-Math.PI / 2.1, 0, 0]}
+            material={{ friction: 0.1, restitution: 0 }}
+          />
           <Objects projekte={projekte} />
           {/* </Debug> */}
         </Physics>
