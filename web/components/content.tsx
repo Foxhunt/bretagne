@@ -18,12 +18,10 @@ export default function Content({ blok }) {
         )}
         {(blok.titel || blok.beschreibung) && (
           <div className="flex-1 ">
-            {blok.titel && (
-              <p className="text-4xl pb-6 font-oswald">{blok.titel}</p>
-            )}
+            {blok.titel && <p className="text-4xl pb-6">{blok.titel}</p>}
             {blok.beschreibung && (
               <div
-                className="text-justify font-cardo"
+                className="text-justify"
                 dangerouslySetInnerHTML={{
                   __html: renderRichText(blok.beschreibung),
                 }}

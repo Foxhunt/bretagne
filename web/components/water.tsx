@@ -85,7 +85,7 @@ export default function Water(props: HeightfieldProps) {
   );
 
   useFrame((state) => {
-    const time = state.clock.getElapsedTime();
+    let time = state.clock.elapsedTime;
 
     if (!GPUTier.isMobile) {
       for (let i = 0; i < heights.length; i++) {
@@ -94,9 +94,8 @@ export default function Water(props: HeightfieldProps) {
         }
       }
       setHeights(heights.concat());
+      setPosition([position[0], Math.cos(time * 0.1) * 1.5, position[2]]);
     }
-
-    setPosition([position[0], Math.cos(time * 0.1) * 1.5, position[2]]);
   });
 
   return (

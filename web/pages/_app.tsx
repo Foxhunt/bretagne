@@ -1,23 +1,16 @@
 import { apiPlugin, getStoryblokApi, storyblokInit } from "@storyblok/react";
-import App, { AppProps, AppContext, AppInitialProps } from "next/app";
-import pointcloud from "../components/bloks/pointcloud";
+import App, { AppContext, AppInitialProps, AppProps } from "next/app";
 import bild from "../components/bloks/bild";
-import video from "../components/bloks/video";
-import ton from "../components/bloks/ton";
-import gltf from "../components/bloks/gltf";
 import gallery from "../components/bloks/gallery";
+import gltf from "../components/bloks/gltf";
+import pointcloud from "../components/bloks/pointcloud";
+import ton from "../components/bloks/ton";
+import video from "../components/bloks/video";
 
-import "@fontsource/cardo";
-import "@fontsource/oswald";
-
+import Beach from "../components/beach";
 import "../styles/index.css";
-import { Physics } from "@react-three/cannon";
-import { AdaptiveDpr, OrbitControls } from "@react-three/drei";
-import { Canvas } from "@react-three/fiber";
-import { Suspense } from "react";
-import Objects from "../components/objects";
-import Sand from "../components/sand";
-import Water from "../components/water";
+import Link from "next/link";
+import { IBM_Plex_Mono } from "next/font/google";
 
 const NEXT_PUBLIC_STORYBLOK_ACCESS_TOKEN =
   process.env.NEXT_PUBLIC_STORYBLOK_ACCESS_TOKEN;
@@ -35,6 +28,12 @@ storyblokInit({
   },
 });
 
+const ibm_plex_mono = IBM_Plex_Mono({
+  subsets: ["latin"],
+  weight: ["400", "700"],
+  variable: "--ibm-plex-mono",
+});
+
 function MyApp({
   Component,
   pageProps,
@@ -43,62 +42,27 @@ function MyApp({
   projekte: { path: string; titelBild: string }[];
 }) {
   return (
-    <>
-      <div className="h-screen">
-        <Canvas
-          camera={{
-            fov: 70,
-            position: [0, 40, 60],
-            far: 4000,
-            near: 0.1,
-          }}
-          frameloop="demand"
-          shadows
-          performance={{
-            min: 0.1,
-            max: 1,
-            current: 0.5,
-            debounce: 100,
-          }}
-        >
-          <AdaptiveDpr pixelated />
-          {/* <Stats showPanel={0} className="stats" /> */}
-          <pointLight
-            position={[100, 50, -100]}
-            intensity={3}
-            castShadow
-            shadow-mapSize-height={512 * 4}
-            shadow-mapSize-width={512 * 4}
-          />
-          <color attach="background" args={["#eeeeee"]} />
-          <ambientLight />
-          <OrbitControls
-            makeDefault
-            enableRotate={false}
-            enablePan={false}
-            enableZoom={false}
-            // onChange={(e) => console.log(e.target.object.position)}
-          />
-          <Physics>
-            {/* <Debug> */}
-            <Sand
-              rotation={[-Math.PI / 1.9, 0, 0]}
-              material={{ friction: 1, restitution: 1 }}
-            />
-            <Suspense>
-              {/* @ts-ignore */}
-              <Water
-                rotation={[-Math.PI / 2.1, 0, 0]}
-                material={{ friction: 0.1, restitution: 0 }}
-              />
-            </Suspense>
-            <Objects projekte={projekte} />
-            {/* </Debug> */}
-          </Physics>
-        </Canvas>
+    <main className={`${ibm_plex_mono.variable} font-mono`}>
+      <nav className="flex items-center justify-center">
+        <ul className="flex flex-col md:flex-row align-center text-xl text-center py-9">
+          <li className="px-14 py-1">Exkursion</li>
+          <Link href="/">
+            <li className="px-14 py-1 font-bold">Extra Muros 2022 Bretange</li>
+          </Link>
+          <li className="px-14 py-1">Projekte</li>
+        </ul>
+      </nav>
+      <div className="relative">
+        <Beach projekte={projekte} />
+        <Component {...pageProps} />
       </div>
-      <Component {...pageProps} />
-    </>
+      <div className="w-full h-64 flex flex-col items-center justify-center bg-[#D3D3D3] text-xs text-center">
+        <p>© 2023 Raum für Gestaltung – Fachbereich Medien,</p>
+        <p>Hochschule Düsseldorf, University of Applied Science, Düsseldorf.</p>
+        <p>Münsterstraße 156, 40476, Düsseldorf.</p>
+        <p>Datenschutz, Impressum.</p>
+      </div>
+    </main>
   );
 }
 

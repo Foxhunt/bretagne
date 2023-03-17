@@ -13,7 +13,7 @@ export default function Post({ story }) {
   story = useStoryblokState(story);
 
   return (
-    <main
+    <div
       {...storyblokEditable(story.content)}
       className="absolute top-0 w-full min-h-screen bg-white"
     >
@@ -23,18 +23,19 @@ export default function Post({ story }) {
           src={story.content.titelbild?.filename}
           alt={story.content.name}
           fill
+          priority
         />
-        <h1 className="absolute backdrop-blur-sm bg-white/10 block w-full text-8xl text-white px-6 pb-3 pt-3 font-oswald">
+        <h1 className="absolute backdrop-blur-sm bg-white/10 block w-full text-8xl text-white px-6 pb-3 pt-3">
           {story.content.name}
         </h1>
       </div>
       <div className="flex flex-col gap-8 mt-6 mx-6 md:mx-32">
-        <p className="font-cardo">{story.content.beschreibung}</p>
+        <p className="">{story.content.beschreibung}</p>
         {story.content.blocks?.map((block) => (
           <Content blok={block} key={block._uid} />
         ))}
       </div>
-    </main>
+    </div>
   );
 }
 

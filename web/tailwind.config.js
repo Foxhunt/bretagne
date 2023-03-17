@@ -30,8 +30,7 @@ module.exports = {
         '8xl': '6.25rem',
       },
       fontFamily: {
-        cardo: ["Cardo"],
-        oswald: ["Oswald"],
+        mono: ["var(--ibm-plex-mono)"]
       },
       boxShadow: {
         small: '0 5px 10px rgba(0, 0, 0, 0.12)',

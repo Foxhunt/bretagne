@@ -30,7 +30,6 @@ export default function Object({
   useEffect(() => {
     if (isUnderwater) {
       return api.position.subscribe((position) => {
-        // console.log("position", position);
         setPosition([position[0], position[1] - 1.5, position[2]]);
       });
     }
@@ -45,7 +44,6 @@ export default function Object({
     },
     (result) => {
       if (isUnderwater) {
-        // console.log("top", result.hasHit);
         api.velocity.set(0, 4, 0);
         api.collisionFilterMask.set(1);
         setIsUnderwater(true);
@@ -88,19 +86,16 @@ export default function Object({
         }}
         onPointerOver={(event) => {
           event.stopPropagation();
-          console.log("onPointerOver");
           setHovered(true);
         }}
         onPointerOut={(event) => {
           event.stopPropagation();
-          console.log("onPointerOut");
           setHovered(false);
         }}
         castShadow
         receiveShadow
       >
         <sphereGeometry args={[hovered ? 3.5 : 3]} />
-        {/* <dodecahedronGeometry args={[1.5]} /> */}
         <meshStandardMaterial
           map={texture}
           color={!hovered ? "#c0c0d8" : "#4dd2ff"}

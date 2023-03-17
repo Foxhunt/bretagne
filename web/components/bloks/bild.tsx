@@ -8,6 +8,7 @@ export default function Bild({ blok }) {
         src={blok.bild.filename}
         alt={blok.titel}
         fill
+        sizes="(min-width: 768px) 100vw, 640px"
       />
     </div>
   );
