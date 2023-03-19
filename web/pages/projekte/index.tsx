@@ -43,7 +43,7 @@ export const getStaticProps: GetStaticProps = async () => {
     props: {
       projekte: shuffle(data.stories),
     },
-    revalidate: 3600, // revalidate every hour
+    revalidate: 1, // revalidate every second
   };
 };
 
