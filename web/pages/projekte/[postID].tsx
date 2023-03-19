@@ -1,6 +1,7 @@
 import {
   getStoryblokApi,
   ISbStoriesParams,
+  ISbStoryParams,
   storyblokEditable,
   useStoryblokState,
 } from "@storyblok/react";
@@ -19,8 +20,10 @@ export default function Post({ story }) {
       <Header story={story} />
       <main className="flex flex-col gap-5 pt-5 px-6 sm:px-20 md:px-30 lg:px-52">
         <section>
-          <h1 className="font-bold text-4xl ">{story.content.projektname}</h1>
-          <p className="text-3xl">{story.content.name}</p>
+          <h1 className="font-bold break-all text-4xl ">
+            {story.content.projektname}
+          </h1>
+          <p className="text-3xl break-all">{story.content.name}</p>
         </section>
         <p className="md:columns-2 gap-5 text-justify">
           {story.content.beschreibung}
@@ -40,6 +43,7 @@ export const getStaticPaths: GetStaticPaths = async () => {
 
   const { data } = await storyblokApi.getStories({
     starts_with: "projekte/",
+    excluding_slugs: "projekte/",
     version: "draft",
   });
 
@@ -53,18 +57,15 @@ export const getStaticPaths: GetStaticPaths = async () => {
 
 export const getStaticProps: GetStaticProps = async ({ params }) => {
   // home is the default slug for the homepage in Storyblok
-  const slug = params.postID;
+  const slug = params.postID as string;
 
   // load the draft version
-  const sbParams: ISbStoriesParams = {
+  const sbParams: ISbStoryParams = {
     version: "draft", // or 'published'
   };
 
   const storyblokApi = getStoryblokApi();
-  const { data } = await storyblokApi.get(
-    `cdn/stories/projekte/${slug}`,
-    sbParams
-  );
+  const { data } = await storyblokApi.getStory(`/projekte/${slug}`, sbParams);
 
   return {
     props: data,
