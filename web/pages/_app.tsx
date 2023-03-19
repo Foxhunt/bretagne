@@ -55,11 +55,33 @@ function MyApp({
         }`}
       >
         <ul className="flex flex-col md:flex-row align-center text-xl text-center py-9">
-          <li className="px-14 py-1">Exkursion</li>
-          <Link href="/">
-            <li className="px-14 py-1 font-bold">Extra Muros 2022 Bretange</li>
+          <Link href="/exkursion">
+            <li
+              className={`px-14 py-1 ${
+                router.asPath === "/exkursion" ? "font-bold" : ""
+              }`}
+            >
+              Exkursion
+            </li>
           </Link>
-          <li className="px-14 py-1">Projekte</li>
+          <Link href="/">
+            <li
+              className={`px-14 py-1 ${
+                router.asPath === "/" ? "font-bold" : ""
+              }`}
+            >
+              Extra Muros 2022 Bretange
+            </li>
+          </Link>
+          <Link href="/projekte">
+            <li
+              className={`px-14 py-1 ${
+                router.asPath === "/projekte" ? "font-bold" : ""
+              }`}
+            >
+              Projekte
+            </li>
+          </Link>
         </ul>
       </nav>
       <div className="relative">
@@ -74,7 +96,10 @@ function MyApp({
         <p>© 2023 Raum für Gestaltung – Fachbereich Medien,</p>
         <p>Hochschule Düsseldorf, University of Applied Science, Düsseldorf.</p>
         <p>Münsterstraße 156, 40476, Düsseldorf.</p>
-        <p>Datenschutz, Impressum.</p>
+        <p>
+          <Link href={"/datenschutz"}>Datenschutz</Link>,{" "}
+          <Link href={"/impressum"}>Impressum.</Link>
+        </p>
       </footer>
     </div>
   );
@@ -93,6 +118,7 @@ MyApp.getInitialProps = async (
 
   const { data } = await storyblokApi.getStories({
     starts_with: "projekte/",
+    excluding_slugs: "projekte/",
     version: "draft",
   });
 
@@ -105,8 +131,8 @@ MyApp.getInitialProps = async (
   }));
 
   return {
-    projekte,
     ...appIinitialProps,
+    projekte,
   };
 };
 
