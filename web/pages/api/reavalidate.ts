@@ -26,7 +26,10 @@ export default async function handler(
     };
     const story = await storyblok.getStory(req.body.story_id, sbParams);
 
+    await res.revalidate("/");
     await res.revalidate("/" + story.data.story.full_slug);
+    await res.revalidate("/projekte");
+
     console.log(`Revalidated ${story.data.story.full_slug}`);
     return res.json({ revalidated: true });
   } catch (err) {
