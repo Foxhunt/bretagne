@@ -37,7 +37,7 @@ const ibm_plex_mono = IBM_Plex_Mono({
   variable: "--ibm-plex-mono",
 });
 
-function MyApp({
+export default function MyApp({
   Component,
   pageProps,
   projekte,
@@ -94,11 +94,15 @@ function MyApp({
         } text-xs text-center`}
       >
         <p>© 2023 Raum für Gestaltung – Fachbereich Medien,</p>
-        <p>Hochschule Düsseldorf, University of Applied Science, Düsseldorf.</p>
+        <Link href="https://hs-duesseldorf.de/">
+          <p>
+            Hochschule Düsseldorf, University of Applied Science, Düsseldorf.
+          </p>
+        </Link>
         <p>Münsterstraße 156, 40476, Düsseldorf.</p>
         <p>
           <Link href={"/datenschutz"}>Datenschutz</Link>,{" "}
-          <Link href={"/impressum"}>Impressum.</Link>
+          <Link href={"/impressum"}>Impressum</Link>.
         </p>
       </footer>
     </div>
@@ -135,5 +139,3 @@ MyApp.getInitialProps = async (
     projekte,
   };
 };
-
-export default MyApp;
