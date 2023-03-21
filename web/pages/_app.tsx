@@ -128,10 +128,11 @@ MyApp.getInitialProps = async (
 
   const projekte = data.stories.map((story) => ({
     path: story.full_slug,
-    titelBild:
-      `/_next/image?url=${encodeURIComponent(
-        story.content.titelbild?.filename
-      )}&w=640&q=75` || "",
+    titelBild: story.content.titelbild?.filename
+      ? `/_next/image?url=${encodeURIComponent(
+          story.content.titelbild?.filename
+        )}&w=640&q=75`
+      : "https://picsum.photos/id/12/300",
   }));
 
   return {
