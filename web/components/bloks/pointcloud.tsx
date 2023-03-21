@@ -1,8 +1,24 @@
 import { OrbitControls } from "@react-three/drei";
-import { Canvas, useFrame } from "@react-three/fiber";
+import { Canvas, useFrame, useThree } from "@react-three/fiber";
 import { useEffect, useMemo, useRef, useState, useTransition } from "react";
 import * as THREE from "three";
 import { BufferAttribute } from "three";
+
+import { useIntersection } from "react-use";
+
+const DisabaleRender = () => useFrame(() => null, 1000);
+const ContextControl = ({ isIntersecting }) => {
+  const { gl } = useThree();
+
+  useEffect(() => {
+    if (isIntersecting) {
+      gl.forceContextRestore();
+    } else {
+      gl.forceContextLoss();
+    }
+  }, [gl, isIntersecting]);
+  return null;
+};
 
 const vertexShader = `
 uniform vec3 mousePos;
@@ -165,11 +181,18 @@ export default function Pointcloud({ blok }) {
     });
   }, [blok.depth.filename, blok.image.filename]);
 
+  const ref = useRef<HTMLDivElement>(null);
+  const intersection = useIntersection(ref, {
+    rootMargin: "300px",
+    threshold: 0,
+  });
+
+  // console.log(intersection?.isIntersecting, intersection?.target);
+
   return (
-    <div className="w-full aspect-square">
+    <div ref={ref} className="w-full aspect-square">
       <Canvas
-        linear
-        flat
+        frameloop="demand"
         resize={{
           debounce: { scroll: 0, resize: 0 },
           scroll: false,
@@ -178,6 +201,8 @@ export default function Pointcloud({ blok }) {
         camera={{ position: [0, 0, 100], far: 1000 }}
         raycaster={{ params: { Points: { threshold: 0.2 } } }}
       >
+        <ContextControl isIntersecting={intersection?.isIntersecting} />
+        {!intersection?.isIntersecting && <DisabaleRender />}
         <OrbitControls
           autoRotate
           autoRotateSpeed={-0.4}
