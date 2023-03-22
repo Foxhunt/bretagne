@@ -26,7 +26,7 @@ export default function Header({ story, projekte }) {
           priority
         />
       </div>
-      <Link href={"/" + links.full_slug}>
+      <Link href={"/" + rechts.full_slug}>
         <div className="h-[20vw] aspect-[1/2] relative">
           <Image
             className="object-cover object-left rounded-l-full brightness-50 hover:scale-105"

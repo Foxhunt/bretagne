@@ -37,7 +37,7 @@ export default function Post({ story, projekte }) {
       <div className="flex flex-wrap justify-evenly gap-5 py-5 px-6 sm:px-20 md:px-30 lg:px-52">
         {shuffle(projekte).map((projekt) => {
           return (
-            <Link href={projekt.full_slug} key={projekt.id}>
+            <Link href={"/" + projekt.full_slug} key={projekt.id}>
               <Image
                 className="rounded-full aspect-square object-cover hover:scale-105"
                 src={projekt.titelbild}
