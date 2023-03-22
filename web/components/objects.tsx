@@ -15,11 +15,11 @@ export default function Objects({ projekte }) {
 
   return (
     <>
-      {projekte.map(({ path, titelBild }) => (
+      {projekte.map(({ path, titelbild }) => (
         <Object
           key={path}
           onClick={(e) => router.push(path)}
-          titelBild={titelBild}
+          titelbild={titelbild}
           position={[
             three.viewport.width * 0.8 * Math.random() -
               (three.viewport.width * 0.8) / 2,

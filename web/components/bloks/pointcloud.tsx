@@ -228,7 +228,7 @@ export default function Pointcloud({ blok }) {
             />
           )}
       </Canvas>
-      {blok.titel && <p className="pt-3">{blok.titel}</p>}
+      {blok.titel && <p className="pt-5">{blok.titel}</p>}
     </div>
   );
 }

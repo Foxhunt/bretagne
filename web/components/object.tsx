@@ -10,9 +10,9 @@ import { Mesh, RepeatWrapping, Texture } from "three";
 
 export default function Object({
   onClick,
-  titelBild,
+  titelbild,
   ...props
-}: SphereProps & { onClick: (e: any) => void; titelBild: string }) {
+}: SphereProps & { onClick: (e: any) => void; titelbild: string }) {
   const [ref, api] = useSphere<Mesh>(() => ({
     mass: 10,
     linearDamping: 0.1,
@@ -71,7 +71,7 @@ export default function Object({
 
   const [hovered, setHovered] = useState(false);
 
-  const texture = useTexture(titelBild, (texture: Texture) => {
+  const texture = useTexture(titelbild, (texture: Texture) => {
     texture.wrapS = texture.wrapT = RepeatWrapping;
     texture.repeat.set(1, 1);
   });

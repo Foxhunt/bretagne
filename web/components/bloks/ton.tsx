@@ -7,7 +7,7 @@ export default function Ton({ blok }) {
         controls
         loop
       />
-      {blok.titel && <p className="pt-3">{blok.titel}</p>}
+      {blok.titel && <p className="pt-5">{blok.titel}</p>}
     </div>
   );
 }

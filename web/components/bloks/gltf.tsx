@@ -23,7 +23,7 @@ export default function GLTF({ blok }) {
           {blok.gltf && <GLTG gltf={blok.gltf.filename} />}
         </Suspense>
       </Canvas>
-      {blok.titel && <p className="pt-3">{blok.titel}</p>}
+      {blok.titel && <p className="pt-5">{blok.titel}</p>}
     </div>
   );
 }

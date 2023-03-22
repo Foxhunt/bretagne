@@ -1,5 +1,4 @@
-import { getStoryblokApi, ISbStoryData } from "@storyblok/react";
-import { GetStaticProps } from "next";
+import { ISbStoryData } from "@storyblok/react";
 import Image from "next/image";
 import Link from "next/link";
 import { ISbComponentType } from "storyblok-js-client";
@@ -15,39 +14,28 @@ export default function Projekte({
 }) {
   return (
     <main className="flex flex-wrap justify-evenly gap-5 py-5 px-6 sm:px-20 md:px-30 lg:px-52">
-      {projekte.map((projekt) => (
-        <Link key={projekt.id} href={projekt.full_slug}>
-          <Image
-            className="rounded-full aspect-square object-cover"
-            src={projekt.content.titelbild?.filename}
-            alt={projekt.name}
-            width={300}
-            height={300}
-          />
-        </Link>
-      ))}
+      {shuffle(projekte).map((projekt) => {
+        return (
+          <Link key={projekt.id} href={projekt.full_slug}>
+            <Image
+              className="rounded-full aspect-square object-cover hover:scale-105"
+              src={projekt.titelbild}
+              alt={projekt.name}
+              width={300}
+              height={300}
+            />
+            <p className="text-center font-bold pt-5">
+              {projekt.content.projektname}
+            </p>
+            <p className="text-center pt-2 pb-5">{projekt.content.name}</p>
+          </Link>
+        );
+      })}
     </main>
   );
 }
 
-export const getStaticProps: GetStaticProps = async () => {
-  const storyblokApi = getStoryblokApi();
-
-  const { data } = await storyblokApi.getStories({
-    starts_with: "projekte/",
-    excluding_slugs: "projekte/",
-    version: "draft",
-  });
-
-  return {
-    props: {
-      projekte: shuffle(data.stories),
-    },
-    revalidate: 1, // revalidate every second
-  };
-};
-
-function shuffle(array) {
+export function shuffle(array) {
   let currentIndex = array.length,
     randomIndex;
 

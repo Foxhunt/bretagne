@@ -42,7 +42,7 @@ export default function MyApp({
   pageProps,
   projekte,
 }: AppProps & {
-  projekte: { path: string; titelBild: string }[];
+  projekte: { path: string; titelbild: string }[];
 }) {
   const router = useRouter();
   const inIndex = router.asPath === "/";
@@ -86,7 +86,7 @@ export default function MyApp({
       </nav>
       <div className="relative">
         <Beach projekte={projekte} />
-        <Component {...pageProps} />
+        <Component {...pageProps} projekte={projekte} />
       </div>
       <footer
         className={`w-full h-64 flex flex-col items-center justify-center ${
@@ -113,7 +113,7 @@ MyApp.getInitialProps = async (
   appContext: AppContext
 ): Promise<
   AppInitialProps<any> & {
-    projekte: { path: string; titelBild: string }[];
+    projekte: { path: string; titelbild: string }[];
   }
 > => {
   const appIinitialProps = await App.getInitialProps(appContext);
@@ -127,8 +127,9 @@ MyApp.getInitialProps = async (
   });
 
   const projekte = data.stories.map((story) => ({
+    ...story,
     path: story.full_slug,
-    titelBild: story.content.titelbild?.filename
+    titelbild: story.content.titelbild?.filename
       ? `/_next/image?url=${encodeURIComponent(
           story.content.titelbild?.filename
         )}&w=640&q=75`
