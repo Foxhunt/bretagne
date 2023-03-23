@@ -70,7 +70,7 @@ export default function MyApp({
                 router.asPath === "/" ? "font-bold" : ""
               }`}
             >
-              Extra Muros 2022 Bretange
+              Extra Muros 2022 Bretagne
             </li>
           </Link>
           <Link href="/projekte">
