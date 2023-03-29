@@ -7,7 +7,10 @@ export default function Header({ story, projekte }) {
   return (
     <header className="flex justify-between items-center w-full relative">
       <Link href={"/" + links.full_slug}>
-        <div className="h-[20vw] aspect-[1/2] relative">
+        <div
+          className="h-[20vw] aspect-[1/2] relative"
+          key={links.content.titelbild?.filename}
+        >
           <Image
             className="object-cover object-right rounded-r-full brightness-50 hover:scale-105"
             src={links.content.titelbild?.filename}
@@ -27,7 +30,10 @@ export default function Header({ story, projekte }) {
         />
       </div>
       <Link href={"/" + rechts.full_slug}>
-        <div className="h-[20vw] aspect-[1/2] relative">
+        <div
+          className="h-[20vw] aspect-[1/2] relative"
+          key={rechts.content.titelbild?.filename}
+        >
           <Image
             className="object-cover object-left rounded-l-full brightness-50 hover:scale-105"
             src={rechts.content.titelbild?.filename}

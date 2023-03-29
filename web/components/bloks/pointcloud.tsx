@@ -87,6 +87,7 @@ function Particles({ pointCount, colors, depth, width, height }: any) {
     materialRef.current.uniformsNeedUpdate = true;
   }, [colors, depth, height, materialRef, pointCount, positions, width]);
 
+  // https://threejs.org/docs/#api/en/objects/Points
   return (
     <points>
       <bufferGeometry ref={geometryRef}>
@@ -190,7 +191,12 @@ export default function Pointcloud({ blok }) {
   // console.log(intersection?.isIntersecting, intersection?.target);
 
   return (
-    <div ref={ref} className="w-full aspect-square">
+    <div
+      ref={ref}
+      className={`w-full aspect-square ${
+        !intersection?.isIntersecting ? "invisible" : ""
+      }`}
+    >
       <Canvas
         frameloop="demand"
         resize={{
