@@ -3,6 +3,7 @@ import { Canvas, useFrame, useThree } from "@react-three/fiber";
 import { useEffect, useMemo, useRef, useState, useTransition } from "react";
 import * as THREE from "three";
 import { BufferAttribute } from "three";
+import { OrbitControls as OrbitControlsImpl } from "three-stdlib";
 
 import { useIntersection } from "react-use";
 
@@ -190,6 +191,17 @@ export default function Pointcloud({ blok }) {
 
   // console.log(intersection?.isIntersecting, intersection?.target);
 
+  const controlRef = useRef<OrbitControlsImpl>(null);
+  const [resetTimeout, setResetTimeout] = useState(0);
+  useEffect(() => {
+    if (!controlRef.current) return;
+
+    const interval = setTimeout(() => {
+      controlRef.current?.reset();
+    }, 10000);
+    return () => clearTimeout(interval);
+  }, [resetTimeout]);
+
   return (
     <div
       ref={ref}
@@ -206,16 +218,25 @@ export default function Pointcloud({ blok }) {
         }}
         camera={{ position: [0, 0, 100], far: 1000 }}
         raycaster={{ params: { Points: { threshold: 0.2 } } }}
+        onWheel={(self) => {
+          console.log("wheel");
+          setResetTimeout((v) => v + 1);
+        }}
+        onPointerUp={(self) => {
+          console.log("pointerUp");
+          setResetTimeout((v) => v + 1);
+        }}
       >
         <ContextControl isIntersecting={intersection?.isIntersecting} />
         {!intersection?.isIntersecting && <DisabaleRender />}
         <OrbitControls
+          ref={controlRef}
           autoRotate
           autoRotateSpeed={-0.4}
-          enablePan={false}
-          enableZoom={false}
           minPolarAngle={Math.PI / 3}
           maxPolarAngle={Math.PI - Math.PI / 3}
+          // enablePan={false}
+          // enableZoom={false}
           // minAzimuthAngle={-Math.PI / 3}
           // maxAzimuthAngle={Math.PI / 3}
           // onUpdate={(self) => console.log(self)}
