@@ -127,7 +127,7 @@ MyApp.getInitialProps = async (
   });
 
   const projekte = data.stories.map((story) => ({
-    ...story,
+    name: story.name,
     path: story.full_slug,
     titelbild: story.content.titelbild?.filename
       ? `/_next/image?url=${encodeURIComponent(
