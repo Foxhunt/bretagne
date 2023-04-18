@@ -1,4 +1,6 @@
-import { HeightfieldProps, Triplet, useHeightfield } from "@react-three/cannon";
+import { Triplet } from "@pmndrs/cannon-worker-api/src/types";
+import { HeightfieldProps } from "@pmndrs/cannon-worker-api/src/body";
+import { useHeightfield } from "@react-three/cannon";
 import { useDetectGPU } from "@react-three/drei";
 import { useFrame, useThree } from "@react-three/fiber";
 import { useEffect, useRef, useState } from "react";

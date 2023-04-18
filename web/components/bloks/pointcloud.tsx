@@ -1,9 +1,11 @@
 import { OrbitControls } from "@react-three/drei";
 import { Canvas, useFrame, useThree } from "@react-three/fiber";
 import { useEffect, useMemo, useRef, useState, useTransition } from "react";
-import * as THREE from "three";
-import { BufferAttribute } from "three";
 import { OrbitControls as OrbitControlsImpl } from "three-stdlib";
+import { StaticDrawUsage, StreamDrawUsage } from "three/src/constants";
+import { BufferAttribute } from "three/src/core/BufferAttribute";
+import { Vector3 } from "three/src/math/Vector3";
+import { points as pointsvertex } from "three/src/renderers/shaders/ShaderLib/points.glsl";
 
 import { useIntersection } from "react-use";
 
@@ -21,7 +23,7 @@ export const ContextControl = ({ isIntersecting }) => {
 
 const vertexShader = `
 uniform vec3 mousePos;
-${THREE.ShaderLib.points.vertexShader}
+${pointsvertex}
 `.replace(
   `#include <begin_vertex>`,
   `#include <begin_vertex>
@@ -91,14 +93,14 @@ function Particles({ pointCount, colors, depth, width, height }: any) {
     <points>
       <bufferGeometry ref={geometryRef}>
         <bufferAttribute
-          usage={THREE.StaticDrawUsage}
+          usage={StaticDrawUsage}
           attach="attributes-position"
           array={positions}
           count={positions.length / 3}
           itemSize={3}
         />
         <bufferAttribute
-          usage={THREE.StreamDrawUsage}
+          usage={StreamDrawUsage}
           attach="attributes-color"
           array={new Float32Array(colors)}
           count={colors.length / 3}
@@ -113,7 +115,7 @@ function Particles({ pointCount, colors, depth, width, height }: any) {
         uniforms={{
           size: { value: 4 },
           scale: { value: 1 },
-          mousePos: { value: new THREE.Vector3(0, 0, -20) },
+          mousePos: { value: new Vector3(0, 0, -20) },
         }}
         fragmentShader={fragmentShader}
         vertexShader={vertexShader}
