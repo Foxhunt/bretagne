@@ -8,14 +8,12 @@ import { OrbitControls as OrbitControlsImpl } from "three-stdlib";
 import { useIntersection } from "react-use";
 
 const DisabaleRender = () => useFrame(() => null, 1000);
-const ContextControl = ({ isIntersecting }) => {
+export const ContextControl = ({ isIntersecting }) => {
   const { gl } = useThree();
 
   useEffect(() => {
-    if (isIntersecting) {
+    if (isIntersecting && gl.getContext().isContextLost) {
       gl.forceContextRestore();
-    } else {
-      gl.forceContextLoss();
     }
   }, [gl, isIntersecting]);
   return null;

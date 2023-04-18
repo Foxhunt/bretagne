@@ -2,6 +2,7 @@ import { Physics } from "@react-three/cannon";
 import { AdaptiveDpr } from "@react-three/drei";
 import { Canvas, useFrame } from "@react-three/fiber";
 import { useRouter } from "next/router";
+import { ContextControl } from "./bloks/pointcloud";
 import Objects from "./objects";
 import Sand from "./sand";
 import Water from "./water";
@@ -31,6 +32,7 @@ export default function Beach({ projekte, seaLevel }) {
         }}
       >
         {stopRenderAndPhysics && <DisabaleRender />}
+        <ContextControl isIntersecting={!stopRenderAndPhysics} />
         <AdaptiveDpr pixelated />
         {/* <Stats showPanel={0} className="stats" /> */}
         <pointLight
