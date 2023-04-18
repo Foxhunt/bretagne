@@ -5,7 +5,7 @@ import { OrbitControls as OrbitControlsImpl } from "three-stdlib";
 import { StaticDrawUsage, StreamDrawUsage } from "three/src/constants";
 import { BufferAttribute } from "three/src/core/BufferAttribute";
 import { Vector3 } from "three/src/math/Vector3";
-import { points as pointsvertex } from "three/src/renderers/shaders/ShaderLib/points.glsl";
+import { vertex as pointsvertex } from "three/src/renderers/shaders/ShaderLib/points.glsl";
 
 import { useIntersection } from "react-use";
 
