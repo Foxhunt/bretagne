@@ -12,6 +12,12 @@ const DisabaleRender = () => useFrame(() => null, 1000);
 export default function Beach({ projekte, seaLevel }) {
   const router = useRouter();
   const stopRenderAndPhysics = router.asPath !== "/";
+  console.log(
+    "router.asPath",
+    router.asPath,
+    "stopRenderAndPhysics",
+    stopRenderAndPhysics
+  );
 
   return (
     <div className={`h-screen w-full ${stopRenderAndPhysics ? "hidden" : ""}`}>
