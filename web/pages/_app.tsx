@@ -65,11 +65,7 @@ export default function MyApp({
             </li>
           </Link>
           <Link href="/">
-            <li
-              className={`px-14 py-1 ${
-                router.asPath === "/" ? "font-bold" : ""
-              }`}
-            >
+            <li className={`px-14 py-1 ${inIndex ? "font-bold" : ""}`}>
               Extra Muros 2022 Bretagne
             </li>
           </Link>
