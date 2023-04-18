@@ -45,8 +45,7 @@ export default function MyApp({
   projekte,
 }: AppProps & Props) {
   const router = useRouter();
-  const inIndex = router.asPath === "/";
-  console.log("router.asPath", router.asPath, "inIndex", inIndex);
+  const inIndex = router.asPath === "/" || router.asPath === "/index";
 
   return (
     <div className={`${ibm_plex_mono.variable} font-mono`}>
