@@ -1,7 +1,6 @@
 import { apiPlugin, getStoryblokApi, storyblokInit } from "@storyblok/react";
 import App, { AppContext, AppInitialProps, AppProps } from "next/app";
 import bild from "../components/bloks/bild";
-import gallery from "../components/bloks/gallery";
 import gltf from "../components/bloks/gltf";
 import pointcloud from "../components/bloks/pointcloud";
 import ton from "../components/bloks/ton";
@@ -26,7 +25,6 @@ storyblokInit({
     video,
     ton,
     gltf,
-    gallery,
     text,
   },
 });
