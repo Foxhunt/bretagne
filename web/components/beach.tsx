@@ -11,10 +11,10 @@ const DisabaleRender = () => useFrame(() => null, 1000);
 
 export default function Beach({ projekte, seaLevel }) {
   const router = useRouter();
-  const stopRenderAndPhysics = !["/", "/index"].includes(router.asPath);
+  const isIndex = ["/", "/index"].includes(router.asPath);
 
   return (
-    <div className={`h-screen w-full ${stopRenderAndPhysics ? "hidden" : ""}`}>
+    <div className={`h-screen w-full ${isIndex ? "" : "hidden"}`}>
       <Canvas
         camera={{
           fov: 70,
@@ -31,8 +31,8 @@ export default function Beach({ projekte, seaLevel }) {
           debounce: 100,
         }}
       >
-        {stopRenderAndPhysics && <DisabaleRender />}
-        <ContextControl isIntersecting={!stopRenderAndPhysics} />
+        {!isIndex && <DisabaleRender />}
+        <ContextControl restoreContext={isIndex} />
         <AdaptiveDpr pixelated />
         {/* <Stats showPanel={0} className="stats" /> */}
         <pointLight
@@ -51,7 +51,7 @@ export default function Beach({ projekte, seaLevel }) {
           enableZoom={false}
           // onChange={(e) => console.log(e.target.object.position)}
         /> */}
-        <Physics>
+        <Physics isPaused={!isIndex}>
           {/* <Debug> */}
           <Sand
             rotation={[-Math.PI / 1.9, 0, 0]}

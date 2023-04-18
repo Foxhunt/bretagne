@@ -10,14 +10,15 @@ import { vertex as pointsvertex } from "three/src/renderers/shaders/ShaderLib/po
 import { useIntersection } from "react-use";
 
 const DisabaleRender = () => useFrame(() => null, 1000);
-export const ContextControl = ({ isIntersecting }) => {
+
+export const ContextControl = ({ restoreContext }) => {
   const { gl } = useThree();
 
   useEffect(() => {
-    if (isIntersecting && gl.getContext().isContextLost) {
+    if (restoreContext && gl.getContext().isContextLost) {
       gl.forceContextRestore();
     }
-  }, [gl, isIntersecting]);
+  }, [gl, restoreContext]);
   return null;
 };
 
@@ -227,7 +228,7 @@ export default function Pointcloud({ blok }) {
           setResetTimeout((v) => v + 1);
         }}
       >
-        <ContextControl isIntersecting={intersection?.isIntersecting} />
+        <ContextControl restoreContext={intersection?.isIntersecting} />
         {!intersection?.isIntersecting && <DisabaleRender />}
         <OrbitControls
           ref={controlRef}

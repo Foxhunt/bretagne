@@ -4,8 +4,8 @@ export default function Video({ blok }) {
       <video
         className="rounded-3xl"
         src={blok.video.filename}
+        preload={"metadata"}
         controls
-        autoPlay
         muted
         loop
       />
