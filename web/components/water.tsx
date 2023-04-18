@@ -54,7 +54,11 @@ function HeightmapGeometry({
 
 const elementSize = 10;
 
-export default function Water(props: HeightfieldProps) {
+type Props = {
+  seaLevel: number;
+};
+
+export default function Water(props: HeightfieldProps & Props) {
   const three = useThree();
   const GPUTier = useDetectGPU();
 
@@ -90,11 +94,15 @@ export default function Water(props: HeightfieldProps) {
     if (!GPUTier.isMobile) {
       for (let i = 0; i < heights.length; i++) {
         for (let j = 0; j < heights[i].length; j++) {
-          heights[i][j] = Math.sin(time * 0.4 + j * 0.8) * 1.5;
+          heights[i][j] = Math.sin(time * 0.4 + j * 0.8) * props.seaLevel;
         }
       }
       setHeights(heights.concat());
-      setPosition([position[0], Math.cos(time * 0.1) * 1.5, position[2]]);
+      setPosition([
+        position[0],
+        Math.cos(time * 0.1) * props.seaLevel,
+        position[2],
+      ]);
     }
   });
 

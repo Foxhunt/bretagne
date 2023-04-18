@@ -37,13 +37,15 @@ const ibm_plex_mono = IBM_Plex_Mono({
   variable: "--ibm-plex-mono",
 });
 
+type Props = {
+  projekte: { path: string; titelbild: string }[];
+};
+
 export default function MyApp({
   Component,
   pageProps,
   projekte,
-}: AppProps & {
-  projekte: { path: string; titelbild: string }[];
-}) {
+}: AppProps & Props) {
   const router = useRouter();
   const inIndex = router.asPath === "/";
 
@@ -85,7 +87,7 @@ export default function MyApp({
         </ul>
       </nav>
       <div className="relative">
-        <Beach projekte={projekte} />
+        <Beach projekte={projekte} seaLevel={pageProps.seaLevel} />
         <Component {...pageProps} projekte={projekte} />
       </div>
       <footer
@@ -111,11 +113,7 @@ export default function MyApp({
 
 MyApp.getInitialProps = async (
   appContext: AppContext
-): Promise<
-  AppInitialProps<any> & {
-    projekte: { path: string; titelbild: string }[];
-  }
-> => {
+): Promise<AppInitialProps<any> & Props> => {
   const appIinitialProps = await App.getInitialProps(appContext);
 
   const storyblokApi = getStoryblokApi();

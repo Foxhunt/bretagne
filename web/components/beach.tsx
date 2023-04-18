@@ -8,7 +8,7 @@ import Water from "./water";
 
 const DisabaleRender = () => useFrame(() => null, 1000);
 
-export default function Beack({ projekte }) {
+export default function Beach({ projekte, seaLevel }) {
   const router = useRouter();
   const stopRenderAndPhysics = router.asPath !== "/";
 
@@ -57,6 +57,7 @@ export default function Beack({ projekte }) {
           />
           {/* @ts-ignore */}
           <Water
+            seaLevel={seaLevel}
             rotation={[-Math.PI / 2.1, 0, 0]}
             material={{ friction: 0.1, restitution: 0 }}
           />
