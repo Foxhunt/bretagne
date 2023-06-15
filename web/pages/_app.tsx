@@ -59,7 +59,7 @@ export default function MyApp({
           router.push("/");
           console.log("back to home");
         }
-      }, 5 * 60 * 1000);
+      }, 2 * 60 * 1000);
     };
 
     router.events.on("routeChangeComplete", backToHome);
