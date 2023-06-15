@@ -56,7 +56,7 @@ export default function MyApp({
       console.log(event);
       homeTimeout = setTimeout(() => {
         if (router.asPath !== "/") {
-          // router.push("/");
+          router.push("/");
           console.log("back to home");
         }
       }, 5 * 60 * 1000);
