@@ -3,15 +3,16 @@ import App, { AppContext, AppInitialProps, AppProps } from "next/app";
 import bild from "../components/bloks/bild";
 import gltf from "../components/bloks/gltf";
 import pointcloud from "../components/bloks/pointcloud";
+import text from "../components/bloks/text";
 import ton from "../components/bloks/ton";
 import video from "../components/bloks/video";
-import text from "../components/bloks/text";
 
+import { IBM_Plex_Mono } from "next/font/google";
+import Link from "next/link";
+import { useRouter } from "next/router";
+import { useEffect } from "react";
 import Beach from "../components/beach";
 import "../styles/index.css";
-import Link from "next/link";
-import { IBM_Plex_Mono } from "next/font/google";
-import { useRouter } from "next/router";
 
 const NEXT_PUBLIC_STORYBLOK_ACCESS_TOKEN =
   process.env.NEXT_PUBLIC_STORYBLOK_ACCESS_TOKEN;
@@ -46,6 +47,30 @@ export default function MyApp({
 }: AppProps & Props) {
   const router = useRouter();
   const inIndex = router.asPath === "/" || router.asPath === "/index";
+
+  useEffect(() => {
+    let homeTimeout;
+
+    const backToHome = (event) => {
+      clearTimeout(homeTimeout);
+      console.log(event);
+      homeTimeout = setTimeout(() => {
+        if (router.asPath !== "/") {
+          // router.push("/");
+          console.log("back to home");
+        }
+      }, 5 * 60 * 1000);
+    };
+
+    router.events.on("routeChangeComplete", backToHome);
+    window.addEventListener("mousemove", backToHome);
+
+    return () => {
+      clearTimeout(homeTimeout);
+      window.removeEventListener("mousemove", backToHome);
+      router.events.off("routeChangeComplete", backToHome);
+    };
+  }, [router]);
 
   return (
     <div className={`${ibm_plex_mono.variable} font-mono`}>
